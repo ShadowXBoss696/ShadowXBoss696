@@ -77,9 +77,11 @@ They're a big part of why I care about the craft of telling a story well, in fic
 <p align="center"><sub><i>The tide takes most footprints. These ones it keeps.</i></sub></p>
 
 <p align="center">
-  <a href="https://github.com/ShadowXBoss696">
-    <img src="https://github-readme-activity-graph.vercel.app/graph?username=ShadowXBoss696&custom_title=Footprints%20this%20past%20month&bg_color=1c2552&color=e3e6f3&title_color=fff6e6&line=ffd59a&point=fff6e6&area=true&area_color=e9a07a&hide_border=true&radius=16" alt="A graph of Arpan's GitHub contributions over the past month" width="100%">
-  </a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ShadowXBoss696/ShadowXBoss696/output/footprints-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ShadowXBoss696/ShadowXBoss696/output/footprints-light.svg">
+    <img src="https://raw.githubusercontent.com/ShadowXBoss696/ShadowXBoss696/output/footprints-dark.svg" alt="Arpan's GitHub contributions over the past year, with a small snake wandering across them" width="100%">
+  </picture>
 </p>
 
 <p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
