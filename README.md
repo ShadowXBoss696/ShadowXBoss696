@@ -1,59 +1,99 @@
-# Hi, I am [Arpan Mahanty]() !! <img src="https://media1.giphy.com/media/ZAqci05i1Jj0eQMPae/giphy.gif?cid=790b761198322f8eecd849ca09aa8239e530c995467f4ac5&rid=giphy.gif&ct=s" height=40>
+<div align="center">
 
-Student at [Govt. College of Engineering & Textile Technology, Berhampore](http://www.gcettb.ac.in/)
+<img src="assets/banner.svg" alt="Arpan Mahanty, backend engineer, over a summer dusk at sea: a setting sun, a small island, and butterflies of light rising from the water. Building quiet systems that are meant to last. Every summer ends; what we build is how we remember it." width="100%">
 
-[![Linkedin: arpan-mahanty-40252a190](https://img.shields.io/badge/-Arpan_Mahanty-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/arpan-mahanty-40252a190/)](https://www.linkedin.com/in/arpan-mahanty-40252a190/)
-[![GitHub Edumate696](https://img.shields.io/github/followers/Edumate696?label=follow&style=social)](https://github.com/Edumate696)
-[![Twitter: mahanty_arpan](https://img.shields.io/twitter/follow/mahanty_arpan?style=social)](https://twitter.com/mahanty_arpan)
+</div>
 
-![](https://media0.giphy.com/media/9fxlu9SSqOT7y/giphy_s.gif?cid=790b7611d2a9d84165c279c224b4a4df1ac303e249f6e423&rid=giphy_s.gif&ct=s)
+<br>
 
-## Career Objective 🚀
+Every summer ends. Releases ship, versions get deprecated, teams move on.
+What stays is the work done carefully enough to be remembered: systems that are calm under load, code that reads like a good story, and tools people stop noticing because they simply work.
 
-To work in a challenging and dynamic environment and to keep adding value to the organization that I represent and
-serve, while also concurrently upgrading my skills and knowledge.
+That's the kind of thing I like to build.
 
-## Skills 🪂
+<br>
 
-- Machine Learning
-- Java App Development
-- Android App Development (Flutter)
+<div align="center">
 
-## Language Proficiency 🎉
+<sub>🎐 &nbsp;<b>AFTER THE SUMMER</b>&nbsp; 🎐</sub>
 
-- Java
-- Python
-- MySQL
-- MATLAB
-- Dart
-- C / C++
+*The cicadas grow quiet, the long light turns gold,*<br>
+*the tide takes our footprints, the evening turns cold.*<br>
+*But the things that we made with our hands and our hearts*<br>
+*keep the summer alive when the next one starts.*
 
-## Projects ✨
+</div>
 
-- [Miracurol 2.0](https://soumyajitnandi.000webhostapp.com/) – Website to help patients access their medical condition
-  and access various medical essential from the same place.
-- [ProjectX Music App](https://github.com/ProjectX-music) – A Music Recommendation System made using Flutter and backed
-  by FastAPI.
-- [Kode](https://github.com/Kode-Devs) – A Programming Language Interpreter backed by JVM.
+<p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
 
-## Additional Qualification 👀
+## ☀️ This summer · What I'm building
 
-| Qualification                          | Qualified? | Year | Rank  |
-|----------------------------------------|------------|------|-------|
-| Graduate Aptitude Test in Engineering  | Qualified  | 2021 | 13616 |
-| West Bengal Joint Entrance Examination | Qualified  | 2018 | 6099  |
+I'm a backend engineer at **ACCELQ**, working on the services behind a test automation platform in Java, Spring and PostgreSQL.
+The same care for calm, long-lived systems runs through **[OpenShelves](https://github.com/openshelves-labs)**, a project I'm building to give university libraries a modern front door: as easy to search as the web, as dependable as the archive behind it.
 
-## Academic Qualification 🏫
+<p align="center">
+  <a href="https://github.com/openshelves-labs"><img src="assets/openshelves.svg" alt="OpenShelves: a library shelf in front of a summer-dusk window, with butterflies of light rising from an open book, under a search bar." width="560"></a>
+</p>
 
-| Qualification          | School/College                                                | Board/University                                              | Year | Result |
-|------------------------|---------------------------------------------------------------|---------------------------------------------------------------|------|--------|
-| Bachelor of Technology | Govt. College of Engineering & Textile Technology, Berhampore | Maulana Abul Kalam Azad University of Technology, West Bengal | 2022 | 80 %   |
-| Higher Secondary       | Guru Teg Bahadur Public School, Durgapur                      | Central Board of Secondary Education                          | 2018 | 89 %   |
-| Secondary              | Guru Teg Bahadur Public School, Durgapur                      | Central Board of Secondary Education                          | 2016 | 95 %   |
+<p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
 
-## Achievements 👨‍🎓
+## 🛠️ How I work
 
-- Got into **top 5%** in **NPTEL Online Certification Exam** for successfully completing the course **Problem Solving
-  Through Programming In C**.
-- Achieved **10 pointers** title in my **Secondary School Examination** under **Central Board of Secondary Education,
-  Delhi**.
+- 📖 **Readable first.** Code is read far more often than it is written, so it should read well.
+- 🪶 **Small footprint.** The simplest design that holds is usually the one that lasts.
+- 🌊 **Calm systems.** Clear boundaries, honest errors, nothing surprising at 3 a.m.
+- 🔍 **Know the machinery.** I'd rather understand how something works than wrap it in another library; that's how Kode began.
+- 🔐 **Secure by default.** Hash the tokens, lock the doors, assume the database will one day leak.
+- 📝 **Write it down.** A design doc and a clear README save more time than any clever trick.
+- 🎯 **Finish what matters.** Do the agreed thing, do it properly, then stop. Scope creep is just unfinished work in disguise.
+
+<p align="center">
+  <img src="assets/stack.svg" alt="My tools: Java, the language I think in. Spring Boot, the frame every service hangs on. PostgreSQL, where the memories are kept. Next.js, the front door people walk through. TypeScript, types that keep the story straight." width="100%">
+</p>
+
+<p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
+
+## 🌅 Summers past
+
+<p align="center">
+  <a href="https://github.com/Kode-Devs"><img src="assets/kode-scene.svg" alt="Kode: an old monitor running a small program on a desk by a moonlit summer-night window, with butterflies of light rising from the screen." width="560"></a>
+</p>
+
+**[Kode](https://github.com/Kode-Devs)**: a programming language interpreter built on the JVM. The project where I first learned how languages work from the inside.
+
+<p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
+
+## 🎐 Off the clock
+
+<img src="assets/off-the-clock.svg" alt="A summer-noon postcard: blue sky, tall clouds, a calm sea, a wooden pier and butterflies. Off the clock: long summers, stories worth keeping." width="100%">
+
+Anime, especially the quiet, bittersweet kind: stories like *Summer Pockets* about one fleeting summer, memories worth keeping, and the people who make them.
+They're a big part of why I care about the craft of telling a story well, in fiction and in software.
+
+<p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
+
+## 👣 Footprints
+
+<p align="center"><sub><i>The tide takes most footprints. These ones it keeps.</i></sub></p>
+
+<p align="center">
+  <a href="https://github.com/ShadowXBoss696">
+    <img src="https://github-readme-activity-graph.vercel.app/graph?username=ShadowXBoss696&custom_title=Footprints%20this%20past%20month&bg_color=1c2552&color=e3e6f3&title_color=fff6e6&line=ffd59a&point=fff6e6&area=true&area_color=e9a07a&hide_border=true&radius=16" alt="A graph of Arpan's GitHub contributions over the past month" width="100%">
+  </a>
+</p>
+
+<p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
+
+## 📬 Find me
+
+<div align="center">
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Arpan_Mahanty-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/arpan-mahanty-40252a190/)
+[![Email](https://img.shields.io/badge/Email-arpan.mahanty.007%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:arpan.mahanty.007@gmail.com)
+[![OpenShelves](https://img.shields.io/badge/OpenShelves-2F5D45?style=for-the-badge&logo=github&logoColor=white)](https://github.com/openshelves-labs)
+
+<br><br>
+
+<sub><i>Written on a long summer evening, meant to be remembered.</i></sub>
+
+</div>
