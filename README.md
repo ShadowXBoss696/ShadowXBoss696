@@ -77,11 +77,7 @@ They're a big part of why I care about the craft of telling a story well, in fic
 <p align="center"><sub><i>The tide takes most footprints. These ones it keeps.</i></sub></p>
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ShadowXBoss696/ShadowXBoss696/output/footprints-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ShadowXBoss696/ShadowXBoss696/output/footprints-light.svg">
-    <img src="https://raw.githubusercontent.com/ShadowXBoss696/ShadowXBoss696/output/footprints-dark.svg" alt="Arpan's GitHub contributions over the past year, with a small snake wandering across them" width="100%">
-  </picture>
+  <img src="https://raw.githubusercontent.com/ShadowXBoss696/ShadowXBoss696/output/footprints.svg" alt="Footprints this past year: each day with contributions drawn as a butterfly of light over a summer dusk, larger and brighter on busier days." width="100%">
 </p>
 
 <p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>

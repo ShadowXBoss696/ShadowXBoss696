@@ -1,6 +1,6 @@
-# Draws the contribution grid ("footprints") shown on the profile README.
+# Draws the butterfly "Footprints" image shown on the profile README.
 # Runs twice a day, on every push to main, and on demand from the Actions tab.
-# The generated SVGs are published to the `output` branch, which the README reads from.
+# The generated SVG is published to the `output` branch, which the README reads from.
 
 name: Footprints
 
@@ -20,13 +20,13 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - name: Draw the contribution grid
-        uses: Platane/snk@v3
-        with:
-          github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            dist/footprints-dark.svg?palette=github-dark&color_snake=#ffd59a&color_dots=#161b33,#2c3770,#6d5a92,#e9a07a,#ffd59a
-            dist/footprints-light.svg?color_snake=#e9824e&color_dots=#ebedf0,#c9cfe8,#9a8cc4,#e9a07a,#e9824e
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Draw the butterflies
+        run: python .github/scripts/footprints.py "${{ github.repository_owner }}" dist/footprints.svg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to the output branch
         uses: crazy-max/ghaction-github-pages@v4
