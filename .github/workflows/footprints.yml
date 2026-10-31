@@ -1,6 +1,6 @@
-# Draws the butterfly "Footprints" image shown on the profile README.
+# Draws the "Footprints" tide and "lanterns" images shown on the profile README.
 # Runs twice a day, on every push to main, and on demand from the Actions tab.
-# The generated SVG is published to the `output` branch, which the README reads from.
+# The generated SVGs are published to the `output` branch, which the README reads from.
 
 name: Footprints
 
@@ -23,8 +23,8 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4
 
-      - name: Draw the butterflies
-        run: python .github/scripts/footprints.py "${{ github.repository_owner }}" dist/footprints.svg
+      - name: Draw the footprints and lanterns
+        run: python .github/scripts/footprints.py "${{ github.repository_owner }}" dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

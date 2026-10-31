@@ -77,7 +77,11 @@ They're a big part of why I care about the craft of telling a story well, in fic
 <p align="center"><sub><i>The tide takes most footprints. These ones it keeps.</i></sub></p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ShadowXBoss696/ShadowXBoss696/output/footprints.svg" alt="Footprints this past year: each day with contributions drawn as a butterfly of light over a summer dusk, larger and brighter on busier days." width="100%">
+  <img src="https://raw.githubusercontent.com/ShadowXBoss696/ShadowXBoss696/output/footprints.svg" alt="Footprints this past year: total contributions, active days and busiest month, beside a weekly tide of contributions with a butterfly marking the busiest week." width="100%">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ShadowXBoss696/ShadowXBoss696/output/lanterns.svg" alt="A year of lanterns: the last twelve months as paper lanterns floating over the sea at night, busier months floating higher and glowing brighter." width="100%">
 </p>
 
 <p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>
