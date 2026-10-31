@@ -81,7 +81,11 @@ They're a big part of why I care about the craft of telling a story well, in fic
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ShadowXBoss696/ShadowXBoss696/output/lanterns.svg" alt="A year of lanterns: the last twelve months as paper lanterns floating over the sea at night, busier months floating higher and glowing brighter." width="100%">
+  <img src="https://raw.githubusercontent.com/ShadowXBoss696/ShadowXBoss696/output/craft.svg" alt="How I contribute: a ring splitting the year into commits, pull requests, code reviews and issues, beside my top repositories by commits." width="100%">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ShadowXBoss696/ShadowXBoss696/output/rhythm.svg" alt="My rhythm: contributions by day of the week, with the busiest day glowing gold and the weekday and weekend split." width="100%">
 </p>
 
 <p align="center"><img src="assets/divider.svg" alt="" width="100%"></p>

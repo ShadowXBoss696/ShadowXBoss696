@@ -1,10 +1,11 @@
 """
-Draws the "Footprints" images for the profile README from the GitHub contribution calendar.
+Draws the "Footprints" images for the profile README from GitHub contribution data.
 
   tide.svg        Headline numbers and a weekly "tide" of contributions over the past year,
                   with a butterfly of light marking the busiest week.
-  lanterns.svg    The last twelve months as paper lanterns floating over the sea at night:
-                  busier months float higher and glow brighter.
+  craft.svg       How I contribute (commits, pull requests, reviews, issues) and
+                  where (top repositories, leaving out GitHub's special repos).
+  rhythm.svg      Contributions by day of the week, with the busiest day highlighted.
 
 Usage:
     GITHUB_TOKEN=... python footprints.py <username> <output-directory>
@@ -13,6 +14,7 @@ Uses only the Python standard library.
 """
 
 import json
+import math
 import os
 import sys
 import urllib.request
@@ -27,6 +29,14 @@ QUERY = """
 query($login: String!) {
   user(login: $login) {
     contributionsCollection {
+      totalCommitContributions
+      totalPullRequestContributions
+      totalPullRequestReviewContributions
+      totalIssueContributions
+      commitContributionsByRepository(maxRepositories: 10) {
+        repository { name nameWithOwner owner { login } }
+        contributions { totalCount }
+      }
       contributionCalendar {
         totalContributions
         weeks { contributionDays { date contributionCount } }
@@ -37,8 +47,8 @@ query($login: String!) {
 """
 
 
-def fetch_calendar(login: str, token: str) -> dict:
-    """Returns the contribution calendar for the past year from the GitHub GraphQL API."""
+def fetch_contributions(login: str, token: str) -> dict:
+    """Returns the past year's contributions collection from the GitHub GraphQL API."""
     body = json.dumps({"query": QUERY, "variables": {"login": login}}).encode()
     request = urllib.request.Request(
         "https://api.github.com/graphql",
@@ -52,7 +62,17 @@ def fetch_calendar(login: str, token: str) -> dict:
     if "errors" in payload:
         raise RuntimeError(payload["errors"])
 
-    return payload["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+    return payload["data"]["user"]["contributionsCollection"]
+
+
+def is_special_repo(repository: dict) -> bool:
+    """GitHub's special repos: a profile README repo (name = owner), `.github`, and `*.github.io` pages."""
+    name = repository["name"].lower()
+    return (
+        name == repository["owner"]["login"].lower()
+        or name == ".github"
+        or name.endswith(".github.io")
+    )
 
 
 def monthly_totals(calendar: dict) -> list[tuple[str, int]]:
@@ -187,81 +207,166 @@ def render_tide(calendar: dict) -> str:
 
 
 # -----------------------------------------------------------------------------
-# Lanterns: one per month, floating over the sea
+# Craft: how I contribute, and where
 # -----------------------------------------------------------------------------
 
-def lantern(x: float, y: float, glow: float, month: str, count: int, sea: float) -> str:
-    """A paper lantern at (x, y) with a string down to the water, its reflection, and labels."""
-    return f"""
-  <!-- {month} -->
-  <line x1="{x:.1f}" y1="{y + 30:.1f}" x2="{x:.1f}" y2="{sea:.1f}" stroke="#ffd59a" stroke-opacity="{0.15 + glow * 0.25:.2f}" stroke-dasharray="1 4"/>
-  <circle cx="{x:.1f}" cy="{y:.1f}" r="{34 + glow * 26:.0f}" fill="url(#lanternglow)" opacity="{0.25 + glow * 0.65:.2f}"/>
-  <rect x="{x - 11:.1f}" y="{y - 30:.1f}" width="22" height="5" rx="2" fill="#5a3b2a"/>
-  <rect x="{x - 17:.1f}" y="{y - 26:.1f}" width="34" height="50" rx="14" fill="url(#paper)" opacity="{0.55 + glow * 0.45:.2f}"/>
-  <g stroke="#c9733f" stroke-opacity="0.35">
-    <line x1="{x - 14:.1f}" x2="{x + 14:.1f}" y1="{y - 12:.1f}" y2="{y - 12:.1f}"/>
-    <line x1="{x - 16:.1f}" x2="{x + 16:.1f}" y1="{y:.1f}" y2="{y:.1f}"/>
-    <line x1="{x - 14:.1f}" x2="{x + 14:.1f}" y1="{y + 12:.1f}" y2="{y + 12:.1f}"/>
-  </g>
-  <rect x="{x - 11:.1f}" y="{y + 24:.1f}" width="22" height="5" rx="2" fill="#5a3b2a"/>
-  <text x="{x:.1f}" y="{y + 5:.1f}" text-anchor="middle" font-size="12" font-weight="700" fill="#6b3a1e">{count}</text>
-  <ellipse cx="{x:.1f}" cy="{sea + 18:.1f}" rx="{8 + glow * 10:.1f}" ry="3" fill="#ffd59a" opacity="{0.15 + glow * 0.4:.2f}"/>
-  <text x="{x:.1f}" y="{sea + 44:.1f}" text-anchor="middle" font-size="12" fill="#c9cfe8">{month}</text>"""
+KINDS = [  # (field, label, colour)
+    ("totalCommitContributions",            "Commits",       "#ffd59a"),
+    ("totalPullRequestContributions",       "Pull requests", "#e9a07a"),
+    ("totalPullRequestReviewContributions", "Code reviews",  "#b8a9e6"),
+    ("totalIssueContributions",             "Issues",        "#8fc4ef"),
+]
 
 
-def render_lanterns(calendar: dict) -> str:
-    height = 340
-    sea = 250                     # waterline
-    highest, lowest = 116, 200     # lantern centre for the busiest / quietest month
+def arc(cx: float, cy: float, r: float, start: float, end: float) -> str:
+    """SVG arc from angle `start` to `end` (radians, 0 = 12 o'clock, clockwise)."""
+    x1, y1 = cx + r * math.sin(start), cy - r * math.cos(start)
+    x2, y2 = cx + r * math.sin(end), cy - r * math.cos(end)
+    large = 1 if end - start > math.pi else 0
+    return f"M{x1:.1f},{y1:.1f} A{r},{r} 0 {large} 1 {x2:.1f},{y2:.1f}"
 
-    months = monthly_totals(calendar)
-    peak = max(count for _, count in months) or 1
-    gap = (WIDTH - 2 * 80) / (len(months) - 1)
 
-    lanterns = []
-    for i, (month, count) in enumerate(months):
-        glow = count / peak
-        x = 80 + i * gap
-        y = lowest - glow * (lowest - highest)
-        label = date.fromisoformat(month + "-01").strftime("%b")
-        lanterns.append(lantern(x, y, glow, label, count, sea))
+def render_craft(collection: dict) -> str:
+    height = 320
 
-    busiest = max(months, key=lambda m: m[1])
-    busiest_label = date.fromisoformat(busiest[0] + "-01").strftime("%B %Y")
+    # How I contribute: a ring split by kind of contribution
+    counts = [(label, colour, collection[field]) for field, label, colour in KINDS]
+    total = sum(count for _, _, count in counts) or 1
+    cx, cy, r, gap = 150, 186, 70, 0.04
+
+    angle, ring, legend = 0.0, [], []
+    for i, (label, colour, count) in enumerate(counts):
+        sweep = 2 * math.pi * count / total
+        if count:
+            ring.append(f'<path d="{arc(cx, cy, r, angle + gap / 2, angle + sweep - gap / 2)}" fill="none" stroke="{colour}" stroke-width="18" stroke-linecap="round"/>')
+        angle += sweep
+
+        y = 128 + i * 34
+        legend.append(f"""
+  <circle cx="262" cy="{y - 4}" r="6" fill="{colour}"/>
+  <text x="276" y="{y}" font-size="14" fill="#e3e6f3">{label}</text>
+  <text x="490" y="{y}" font-size="14" fill="#fff6e6" text-anchor="end" font-weight="700">{count:,}</text>
+  <text x="530" y="{y}" font-size="12" fill="#8f98c4" text-anchor="end">{round(100 * count / total)}%</text>""")
+
+    # Where my footprints led: top repositories, special repos left out
+    repos = [r for r in collection["commitContributionsByRepository"] if not is_special_repo(r["repository"])][:5]
+    top = max((r["contributions"]["totalCount"] for r in repos), default=1)
+    bx, bw = 640, 470
+
+    bars = []
+    for i, repo in enumerate(repos):
+        y = 124 + i * 36
+        count = repo["contributions"]["totalCount"]
+        width = max(8, bw * count / top)
+        bars.append(f"""
+  <text x="{bx}" y="{y - 8}" font-size="13" fill="#e3e6f3">{repo["repository"]["nameWithOwner"]}</text>
+  <rect x="{bx}" y="{y - 2}" width="{bw}" height="8" rx="4" fill="#4a5590" opacity="0.35"/>
+  <rect x="{bx}" y="{y - 2}" width="{width:.1f}" height="8" rx="4" fill="url(#bar)"/>
+  <circle cx="{bx + width:.1f}" cy="{y + 2}" r="7" fill="url(#dot)"/>
+  <text x="{bx + bw + 20}" y="{y + 6}" font-size="14" font-weight="700" fill="#fff6e6">{count:,}</text>""")
+
+    if not repos:
+        bars.append(f'<text x="{bx}" y="140" font-size="13" fill="#8f98c4">No public repositories yet this year.</text>')
+
+    summary = ", ".join(f"{count:,} {label.lower()}" for label, _, count in counts)
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{height}" viewBox="0 0 {WIDTH} {height}" font-family="{FONT}">
+  <title>How I contribute: {summary}. Where: {", ".join(r["repository"]["nameWithOwner"] for r in repos) or "no public repositories yet"}.</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141c3a"/><stop offset="0.7" stop-color="#2c3770"/><stop offset="1" stop-color="#5a4d84"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e9a07a"/><stop offset="1" stop-color="#ffd59a"/>
+    </linearGradient>
+    <radialGradient id="dot" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fff6d8"/><stop offset="0.4" stop-color="#ffd59a" stop-opacity="0.8"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="0.5" y="0.5" width="{WIDTH - 1}" height="{height - 1}" rx="16" fill="url(#sky)" stroke="#2a3360"/>
+
+  <!-- How I contribute -->
+  <text x="48" y="58" font-family="{SERIF}" font-size="24" font-weight="600" fill="#fff6e6">How I contribute</text>
+  <text x="48" y="82" font-family="{SERIF}" font-style="italic" font-size="14" fill="#ffd59a">not only writing, but reviewing and asking too</text>
+  <circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="#4a5590" stroke-opacity="0.3" stroke-width="18"/>
+  {"".join(ring)}
+  <text x="{cx}" y="{cy + 2}" text-anchor="middle" font-family="{SERIF}" font-size="28" font-weight="600" fill="#fff6e6">{total:,}</text>
+  <text x="{cx}" y="{cy + 22}" text-anchor="middle" font-size="11" fill="#c9cfe8">this year</text>
+  {"".join(legend)}
+
+  <line x1="590" y1="48" x2="590" y2="{height - 40}" stroke="#4a5590" stroke-opacity="0.5"/>
+
+  <!-- Where my footprints led -->
+  <text x="{bx}" y="58" font-family="{SERIF}" font-size="24" font-weight="600" fill="#fff6e6">Where my footprints led</text>
+  <text x="{bx}" y="82" font-family="{SERIF}" font-style="italic" font-size="14" fill="#ffd59a">the shores I kept returning to, by commits</text>
+  {"".join(bars)}
+</svg>
+"""
+
+
+# -----------------------------------------------------------------------------
+# Rhythm: contributions by day of the week
+# -----------------------------------------------------------------------------
+
+DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+DAYS_PLURAL = ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"]
+
+
+def render_rhythm(calendar: dict) -> str:
+    height = 280
+
+    totals = [0] * 7
+    for week in calendar["weeks"]:
+        for day in week["contributionDays"]:
+            totals[date.fromisoformat(day["date"]).isoweekday() % 7] += day["contributionCount"]
+
+    total = sum(totals) or 1
+    peak = max(totals) or 1
+    busiest = totals.index(peak)
+    weekend = round(100 * (totals[0] + totals[6]) / total)
+
+    # One pillar of light per weekday; the busiest glows gold
+    left, gap, bw, base, tall = 560, 92, 40, 232, 150
+    pillars = []
+    for i, count in enumerate(totals):
+        x = left + i * gap
+        h = max(6, tall * count / peak)
+        is_peak = i == busiest
+        pillars.append(f"""
+  <rect x="{x}" y="{base - tall}" width="{bw}" height="{tall}" rx="20" fill="#4a5590" opacity="0.22"/>
+  <rect x="{x}" y="{base - h:.1f}" width="{bw}" height="{h:.1f}" rx="20" fill="url({'#peak' if is_peak else '#pillar'})"/>
+  <text x="{x + bw / 2}" y="{base - h - 10:.1f}" text-anchor="middle" font-size="12" font-weight="700" fill="{'#fff6e6' if is_peak else '#c9cfe8'}">{count}</text>
+  <text x="{x + bw / 2}" y="{base + 22}" text-anchor="middle" font-size="12" fill="{'#ffd59a' if is_peak else '#8f98c4'}">{DAYS[i]}</text>""")
+
+    peak_x = left + busiest * gap + bw / 2
+    peak_y = base - tall - 40
 
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{height}" viewBox="0 0 {WIDTH} {height}" font-family="{FONT}">
-  <title>The last twelve months as lanterns floating over the sea; busier months float higher and glow brighter. Brightest: {busiest_label}.</title>
+  <title>My rhythm: contributions by day of the week over the past year. Most active on {DAYS_PLURAL[busiest]}; {weekend}% on weekends.</title>
   <defs>
-    <linearGradient id="night" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0d1330"/><stop offset="1" stop-color="#2d3a6e"/>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141c3a"/><stop offset="0.7" stop-color="#2c3770"/><stop offset="1" stop-color="#5a4d84"/>
     </linearGradient>
-    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1f2b58"/><stop offset="1" stop-color="#0e1430"/>
+    <linearGradient id="pillar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b8a9e6"/><stop offset="1" stop-color="#6d5a92"/>
     </linearGradient>
-    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#fff1d6"/><stop offset="0.6" stop-color="#ffc98a"/><stop offset="1" stop-color="#f29a5a"/>
+    <linearGradient id="peak" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd59a"/><stop offset="1" stop-color="#e9a07a"/>
     </linearGradient>
-    <radialGradient id="lanternglow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#ffcf8a" stop-opacity="0.8"/><stop offset="1" stop-color="#ff9f5a" stop-opacity="0"/>
-    </radialGradient>
-    <clipPath id="frame"><rect width="{WIDTH}" height="{height}" rx="16"/></clipPath>
+    {GLOW}
   </defs>
+  <rect x="0.5" y="0.5" width="{WIDTH - 1}" height="{height - 1}" rx="16" fill="url(#sky)" stroke="#2a3360"/>
 
-  <g clip-path="url(#frame)">
-    <rect width="{WIDTH}" height="{sea}" fill="url(#night)"/>
-    <rect y="{sea}" width="{WIDTH}" height="{height - sea}" fill="url(#sea)"/>
-    <g fill="#ffffff">
-      <circle cx="420" cy="44" r="1.2" opacity="0.6"/><circle cx="520" cy="28" r="1" opacity="0.5"/>
-      <circle cx="760" cy="52" r="1.3" opacity="0.6"/><circle cx="1010" cy="34" r="1" opacity="0.5"/>
-      <circle cx="1180" cy="60" r="1.1" opacity="0.5"/>
-    </g>
-  </g>
+  <text x="48" y="58" font-family="{SERIF}" font-size="24" font-weight="600" fill="#fff6e6">My rhythm</text>
+  <text x="48" y="82" font-family="{SERIF}" font-style="italic" font-size="14" fill="#ffd59a">every week has its own tide</text>
 
-  <text x="48" y="54" font-family="{SERIF}" font-size="24" font-weight="600" fill="#fff6e6">A year of lanterns</text>
-  <text x="48" y="78" font-family="{SERIF}" font-style="italic" font-size="14" fill="#ffd59a">one for each month; the brighter it glows, the more it held</text>
-  {"".join(lanterns)}
+  <text x="48" y="150" font-family="{SERIF}" font-size="40" font-weight="600" fill="#ffd59a">{DAYS_PLURAL[busiest]}</text>
+  <text x="48" y="174" font-size="14" fill="#c9cfe8">when I'm most at work</text>
+  <line x1="48" y1="196" x2="420" y2="196" stroke="#4a5590" stroke-opacity="0.6"/>
+  <text x="48" y="232" font-family="{SERIF}" font-size="28" font-weight="600" fill="#fff6e6">{100 - weekend}% · {weekend}%</text>
+  <text x="48" y="254" font-size="13" fill="#c9cfe8">weekdays · weekends</text>
 
-  <rect x="0.5" y="0.5" width="{WIDTH - 1}" height="{height - 1}" rx="16" fill="none" stroke="#2a3360"/>
+  {"".join(pillars)}
+  {butterfly(peak_x, peak_y, 0.75)}
 </svg>
 """
 
@@ -272,11 +377,18 @@ def render_lanterns(calendar: dict) -> str:
 
 if __name__ == "__main__":
     login, output_dir = sys.argv[1], sys.argv[2]
-    calendar = fetch_calendar(login, os.environ["GITHUB_TOKEN"])
+    collection = fetch_contributions(login, os.environ["GITHUB_TOKEN"])
+    calendar = collection["contributionCalendar"]
+
+    images = {
+        "tide.svg": render_tide(calendar),
+        "craft.svg": render_craft(collection),
+        "rhythm.svg": render_rhythm(calendar),
+    }
 
     os.makedirs(output_dir, exist_ok=True)
-    for name, svg in (("tide.svg", render_tide(calendar)), ("lanterns.svg", render_lanterns(calendar))):
+    for name, svg in images.items():
         with open(os.path.join(output_dir, name), "w", encoding="utf-8") as file:
             file.write(svg)
 
-    print(f"Wrote tide.svg and lanterns.svg ({calendar['totalContributions']} contributions)")
+    print(f"Wrote {', '.join(images)} ({calendar['totalContributions']} contributions)")

@@ -1,4 +1,4 @@
-# Draws the "Footprints" tide and "lanterns" images shown on the profile README.
+# Draws the "Footprints" images (tide, craft, rhythm) shown on the profile README.
 # Runs twice a day, on every push to main, and on demand from the Actions tab.
 # The generated SVGs are published to the `output` branch, which the README reads from.
 
@@ -23,7 +23,7 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4
 
-      - name: Draw the footprints and lanterns
+      - name: Draw the footprints
         run: python .github/scripts/footprints.py "${{ github.repository_owner }}" dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
