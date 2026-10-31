@@ -1,7 +1,7 @@
 """
 Draws the "Footprints" images for the profile README from the GitHub contribution calendar.
 
-  footprints.svg  Headline numbers and a weekly "tide" of contributions over the past year,
+  tide.svg        Headline numbers and a weekly "tide" of contributions over the past year,
                   with a butterfly of light marking the busiest week.
   lanterns.svg    The last twelve months as paper lanterns floating over the sea at night:
                   busier months float higher and glow brighter.
@@ -275,8 +275,8 @@ if __name__ == "__main__":
     calendar = fetch_calendar(login, os.environ["GITHUB_TOKEN"])
 
     os.makedirs(output_dir, exist_ok=True)
-    for name, svg in (("footprints.svg", render_tide(calendar)), ("lanterns.svg", render_lanterns(calendar))):
+    for name, svg in (("tide.svg", render_tide(calendar)), ("lanterns.svg", render_lanterns(calendar))):
         with open(os.path.join(output_dir, name), "w", encoding="utf-8") as file:
             file.write(svg)
 
-    print(f"Wrote footprints.svg and lanterns.svg ({calendar['totalContributions']} contributions)")
+    print(f"Wrote tide.svg and lanterns.svg ({calendar['totalContributions']} contributions)")
