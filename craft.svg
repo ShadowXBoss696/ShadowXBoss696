@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" font-family="'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>How I contribute: 319 commits, 1 pull requests, 2 code reviews, 1 issues. Where: openshelves-labs/openshelves, openshelves-labs/openshelves-demo-site, ShadowXBoss696/neetcode-submissions.</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141c3a"/><stop offset="0.7" stop-color="#2c3770"/><stop offset="1" stop-color="#5a4d84"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e9a07a"/><stop offset="1" stop-color="#ffd59a"/>
+    </linearGradient>
+    <radialGradient id="dot" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fff6d8"/><stop offset="0.4" stop-color="#ffd59a" stop-opacity="0.8"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="0.5" y="0.5" width="1279" height="319" rx="16" fill="url(#sky)" stroke="#2a3360"/>
+
+  <!-- How I contribute -->
+  <text x="48" y="58" font-family="Literata, Georgia, 'Times New Roman', serif" font-size="24" font-weight="600" fill="#fff6e6">How I contribute</text>
+  <text x="48" y="82" font-family="Literata, Georgia, 'Times New Roman', serif" font-style="italic" font-size="14" fill="#ffd59a">not only writing, but reviewing and asking too</text>
+  <circle cx="150" cy="186" r="70" fill="none" stroke="#4a5590" stroke-opacity="0.3" stroke-width="18"/>
+  <path d="M151.4,116.0 A70,70 0 1 1 143.2,116.3" fill="none" stroke="#ffd59a" stroke-width="18" stroke-linecap="round"/><path d="M146.0,116.1 A70,70 0 0 1 144.5,116.2" fill="none" stroke="#e9a07a" stroke-width="18" stroke-linecap="round"/><path d="M147.3,116.1 A70,70 0 0 1 147.2,116.1" fill="none" stroke="#b8a9e6" stroke-width="18" stroke-linecap="round"/><path d="M150.0,116.0 A70,70 0 0 1 148.6,116.0" fill="none" stroke="#8fc4ef" stroke-width="18" stroke-linecap="round"/>
+  <text x="150" y="188" text-anchor="middle" font-family="Literata, Georgia, 'Times New Roman', serif" font-size="28" font-weight="600" fill="#fff6e6">323</text>
+  <text x="150" y="208" text-anchor="middle" font-size="11" fill="#c9cfe8">this year</text>
+  
+  <circle cx="262" cy="124" r="6" fill="#ffd59a"/>
+  <text x="276" y="128" font-size="14" fill="#e3e6f3">Commits</text>
+  <text x="490" y="128" font-size="14" fill="#fff6e6" text-anchor="end" font-weight="700">319</text>
+  <text x="530" y="128" font-size="12" fill="#8f98c4" text-anchor="end">99%</text>
+  <circle cx="262" cy="158" r="6" fill="#e9a07a"/>
+  <text x="276" y="162" font-size="14" fill="#e3e6f3">Pull requests</text>
+  <text x="490" y="162" font-size="14" fill="#fff6e6" text-anchor="end" font-weight="700">1</text>
+  <text x="530" y="162" font-size="12" fill="#8f98c4" text-anchor="end">0%</text>
+  <circle cx="262" cy="192" r="6" fill="#b8a9e6"/>
+  <text x="276" y="196" font-size="14" fill="#e3e6f3">Code reviews</text>
+  <text x="490" y="196" font-size="14" fill="#fff6e6" text-anchor="end" font-weight="700">2</text>
+  <text x="530" y="196" font-size="12" fill="#8f98c4" text-anchor="end">1%</text>
+  <circle cx="262" cy="226" r="6" fill="#8fc4ef"/>
+  <text x="276" y="230" font-size="14" fill="#e3e6f3">Issues</text>
+  <text x="490" y="230" font-size="14" fill="#fff6e6" text-anchor="end" font-weight="700">1</text>
+  <text x="530" y="230" font-size="12" fill="#8f98c4" text-anchor="end">0%</text>
+
+  <line x1="590" y1="48" x2="590" y2="280" stroke="#4a5590" stroke-opacity="0.5"/>
+
+  <!-- Where my footprints led -->
+  <text x="640" y="58" font-family="Literata, Georgia, 'Times New Roman', serif" font-size="24" font-weight="600" fill="#fff6e6">Where my footprints led</text>
+  <text x="640" y="82" font-family="Literata, Georgia, 'Times New Roman', serif" font-style="italic" font-size="14" fill="#ffd59a">the shores I kept returning to, by commits</text>
+  
+  <text x="640" y="116" font-size="13" fill="#e3e6f3">openshelves-labs/openshelves</text>
+  <rect x="640" y="122" width="470" height="8" rx="4" fill="#4a5590" opacity="0.35"/>
+  <rect x="640" y="122" width="470.0" height="8" rx="4" fill="url(#bar)"/>
+  <circle cx="1110.0" cy="126" r="7" fill="url(#dot)"/>
+  <text x="1130" y="130" font-size="14" font-weight="700" fill="#fff6e6">283</text>
+  <text x="640" y="152" font-size="13" fill="#e3e6f3">openshelves-labs/openshelves-demo-site</text>
+  <rect x="640" y="158" width="470" height="8" rx="4" fill="#4a5590" opacity="0.35"/>
+  <rect x="640" y="158" width="18.3" height="8" rx="4" fill="url(#bar)"/>
+  <circle cx="658.3" cy="162" r="7" fill="url(#dot)"/>
+  <text x="1130" y="166" font-size="14" font-weight="700" fill="#fff6e6">11</text>
+  <text x="640" y="188" font-size="13" fill="#e3e6f3">ShadowXBoss696/neetcode-submissions</text>
+  <rect x="640" y="194" width="470" height="8" rx="4" fill="#4a5590" opacity="0.35"/>
+  <rect x="640" y="194" width="10.0" height="8" rx="4" fill="url(#bar)"/>
+  <circle cx="650.0" cy="198" r="7" fill="url(#dot)"/>
+  <text x="1130" y="202" font-size="14" font-weight="700" fill="#fff6e6">6</text>
+</svg>
